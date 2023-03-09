@@ -6,3 +6,8 @@ body {
 #grid {
   border: black solid;
 }
+
+.start-and-score {
+  display: flex;
+  gap: 180px;
+}
