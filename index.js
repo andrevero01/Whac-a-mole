@@ -34,6 +34,21 @@ document.getElementById("start-button").onclick = () => {
 
 function startGame() {
   intervalID = setInterval(playGame, 1000);
+  playGame();
+}
+
+function playGame() {
+  getRandomSquare();
+  const hitPosition = document.addEventListener("click", function (event) {
+    /*const isCollision = detectCollision(
+      event.clientX,
+      event.clientX,
+      activeSquare.x,
+      activeSquare.y,
+      squareSize
+    );*/
+    console.log(`Mouse x:${event.clientX} , Screen y:${event.clientY}`);
+  });
 }
 
 function getRandomSquare() {
@@ -47,10 +62,16 @@ function getRandomSquare() {
   }, 700);
 }
 
-function playGame() {
-  getRandomSquare();
-}
+/*function detectCollision(x,y,activeSquare.x,activeSquare.y, squareSize) {
+if (x >= activeSquare.x && x <= activeSquare.x + squareSize &&
+  y >= activeSquare.y && y <= activeSquare.y + squareSize){
+    return true
+  }
+  else {
+    return false
+  }
+}*/
 
-const hitPosition = document.addEventListener("click", function (event) {
-  console.log(`Mouse x:${event.clientX} , Screen y:${event.clientY}`);
-});
+function endGame() {
+  setTimeout(() => clearInterval(intervalID), 1000 * 60);
+}
