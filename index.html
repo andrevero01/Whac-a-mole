@@ -5,15 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles.css" />
-    <title>Hit the mole game</title>
+    <title>Whac a mole game</title>
   </head>
   <body>
-    <canvas id="grid" width="300" height="300"></canvas>
-    <div class="start-and-score">
-      <span id="score">Score:</span>
-      <button id="start-button">StartGame</button>
+    <div class="container">
+      <canvas id="grid"></canvas>
     </div>
-    <script src="/index.js"></script>
+    <div id="btns">
+      <button id="start-btn">Start Game</button>
+      <button id="restart-btn">Restart</button>
+    </div>
+    <div id="timer">
+      <span id="timer-minutes">00</span>
+      <span>:</span>
+      <span id="timer-seconds">00</span>
+    </div>
+    <div class="score">
+      <p id="score">Score:</p>
+      <p id="highscore">Highscore:</p>
+    </div>
+    <script type="module" src="/js/index.js"></script>
   </body>
 </html>
 
