@@ -1,15 +1,115 @@
 body {
   padding: 0;
   margin: 0;
+  display: flex;
+  justify-content: space-between;
+  /* font-family: "Animales Fantastic"; */
+  background: url(/src/bricks\ pink\ beige\ 42500678.jpg);
+  /* background-size: contain; */
+}
+
+.instructions {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.grid-and-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #grid {
-  display: flex;
-  border: black solid;
-  margin: 20px auto 0;
+  border: #f34c6c solid 2px;
+  margin: 20px auto 10px auto;
+  background-image: url(/src/Screenshot\ 2023-03-15\ at\ 20.51.18.png);
+  background-size: cover;
 }
 
-.start-and-score {
+#btns {
   display: flex;
-  gap: 180px;
+  gap: 30px;
+  margin: 15px auto;
+}
+
+.start-btn,
+.restart-btn {
+  position: relative;
+  display: inline-block;
+  font-family: "Animales Fantastic";
+  padding: 5px 20px;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #af1c37;
+  box-shadow: 0px 3px 0px 0px #621010;
+  cursor: pointer;
+}
+
+.start-btn:before,
+.restart-btn::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  left: -30%;
+  width: 150%;
+  height: 150%;
+  background-image: url("/src/—Pngtree—red\ sparks_3332747.png");
+  background-size: 100%;
+  background-position: 0 0;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.start-btn:hover:before,
+.start-btn:active:before,
+.restart-btn:hover::before,
+.restart-btn:active::before {
+  opacity: 1;
+  animation: sparkle 0.5s steps(4) forwards;
+}
+
+@keyframes sparkle {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -1200px 0;
+  }
+}
+
+#timer {
+  font-size: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#timer span {
+  font-size: 40px;
+  font-weight: bold;
+  /* color: #af1c37; */
+  margin: 0 5px;
+}
+
+.scores {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+  font-size: 18px;
+  justify-self: flex-start;
+}
+
+.red-text {
+  color: red;
+}
+
+.pink-text {
+  color: #af1c37;
 }

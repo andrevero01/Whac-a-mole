@@ -8,35 +8,32 @@
     <title>Whac a mole game</title>
   </head>
   <body>
-    <div class="container">
-      <canvas id="grid"></canvas>
-    </div>
-    <div id="btns">
-      <button id="start-btn">Start Game</button>
-      <button id="restart-btn">Restart</button>
-    </div>
-    <div id="timer">
-      <span id="timer-minutes">00</span>
-      <span>:</span>
-      <span id="timer-seconds">00</span>
-    </div>
-    <div class="score">
-      <p id="score">Score:</p>
-      <p id="highscore">Highscore:</p>
-    </div>
+    <!-- Section 1 -- Instructions -->
+    <section class="instructions">
+      <h2>Instructions:</h2>
+      <p></p>
+    </section>
+    <!-- Section-2 -- Grid, Btns and timer-->
+    <section class="grid-and-btns">
+      <div class="grid-container">
+        <canvas id="grid"></canvas>
+      </div>
+      <div id="timer">
+        <span id="timer-minutes">00</span>
+        <span id="timer-division">:</span>
+        <span id="timer-seconds">00</span>
+      </div>
+      <div id="btns">
+        <button class="start-btn">Start Game</button>
+        <button class="restart-btn">Restart</button>
+      </div>
+    </section>
+    <!-- Section-3 -- Scores -->
+    <section class="scores">
+      <span id="score">Score: 0</span>
+      <span id="highscore">Highscore: 0</span>
+    </section>
     <script type="module" src="/js/index.js"></script>
+    <!-- <script type="module" src="/js/index2.js"></script> -->
   </body>
 </html>
-
-<!-- 
-
-- Draw the grid 
-- Begin game function 
-- Paint random squares
-- Clear them
-- Add detect collision for mouse event and squares
-- Add score
-- Add timer
-- Stop game after one minute
-- Pick assets
--->

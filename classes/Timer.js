@@ -3,8 +3,9 @@ class Timer {
     this.el = {
       minutes: document.querySelector("#timer-minutes"),
       seconds: document.querySelector("#timer-seconds"),
+      division: document.querySelector("#timer-division"),
     };
-    this.remainingSeconds = 30;
+    this.remainingSeconds = 60;
   }
 
   drawTimer() {
@@ -18,10 +19,15 @@ class Timer {
     if (this.remainingSeconds >= 0) {
       this.remainingSeconds--;
     }
+    if (this.remainingSeconds < 10) {
+      this.el.minutes.classList.add("red-text");
+      this.el.division.classList.add("red-text");
+      this.el.seconds.classList.add("red-text");
+    }
   }
 
   resetTimer() {
-    this.remainingSeconds = 30;
+    this.remainingSeconds = 60;
     this.drawTimer();
   }
 }
