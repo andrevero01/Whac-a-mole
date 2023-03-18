@@ -3,8 +3,8 @@ window.onload = () => {
   const canvas = document.getElementById("grid");
   const ctx = canvas.getContext("2d");
 
-  //GRID
-  const squareSize = 100;
+  //Drawing GRID
+  const squareSize = 150;
   const horizontalLength = 4;
   const verticalLength = 4;
   canvas.setAttribute("width", squareSize * horizontalLength);
@@ -15,16 +15,16 @@ window.onload = () => {
       for (let col = 0; col < verticalLength; col++) {
         const x = col * squareSize;
         const y = row * squareSize;
-        ctx.strokeStyle = "#FFC0CB	";
+        ctx.strokeStyle = "#FFC0CB  ";
         ctx.strokeRect(x, y, squareSize, squareSize);
       }
     }
   }
   drawGrid();
 
-  //CHARACTERS
+  //CHARACTERS and gameover images
   const dolores = new Image();
-  dolores.src = "/src/dolores umbridge.jpeg";
+  dolores.src = "/src/dolores final 4.webp";
 
   const dobby = new Image();
   dobby.src = "/src/dobby1.jpg";
@@ -33,12 +33,12 @@ window.onload = () => {
   finalDobby.src = "/src/dobby.webp";
 
   const deadDobby = new Image();
-  deadDobby.src = "/src/dobby-dead.png";
+  deadDobby.src = "/src/final dead dobby.jpg";
 
   //Global variables
   let intervalID;
   let activeSquare = { x: -100, y: -100 };
-  let isHit = false;
+  let isDobby = false;
 
   //SCORES
   let scoreCount = 0;
@@ -52,14 +52,23 @@ window.onload = () => {
       highScoreCount = scoreCount;
     }
     const highScore = document.querySelector("#highscore");
-    highScore.textContent = `Highscore: ${highScoreCount}`;
+    highScore.textContent = `Highscore:  ${highScoreCount}`;
   }
 
   updateScore();
   updateHighScore();
 
+  // Lives update
+  let dobbyLife = 3;
+  function updateLives() {
+    const lives = document.querySelector("#dobby-life");
+    lives.textContent = `Lives: ${dobbyLife}`;
+  }
+  updateLives();
+
   //TIMER
   const timer = new Timer();
+  timer.drawTimer();
 
   //Start game
   document.querySelector(".start-btn").onclick = () => {
@@ -71,29 +80,7 @@ window.onload = () => {
     detectCollision(event.offsetX, event.offsetY, squareSize);
   });
 
-  function playGame() {
-    timer.drawTimer();
-    timer.updateTimer();
-    if (Math.random() < 0.8) {
-      getRandomSquare(dolores);
-    } else {
-      getRandomSquare(dobby);
-      if (isHit) {
-        gameOver();
-        updateHighScore();
-        console.log(isHit);
-        return;
-      }
-    }
-    updateScoreOnCollision();
-    console.log(isHit);
-    if (timer.remainingSeconds < 0) {
-      gameOver();
-      updateHighScore();
-    }
-  }
-
-  //SQUARES
+  //SQUARES - Draw random character according to play game interval (1 second)
   function getRandomSquare(character) {
     activeSquare = {
       x: Math.floor(Math.random() * horizontalLength) * squareSize,
@@ -106,12 +93,14 @@ window.onload = () => {
       squareSize,
       squareSize
     );
+    // Clear square and draw outline after 7 seconds
     setTimeout(() => {
       ctx.clearRect(activeSquare.x, activeSquare.y, squareSize, squareSize);
       ctx.strokeRect(activeSquare.x, activeSquare.y, squareSize, squareSize);
     }, 700);
   }
 
+  // Detect collision an update score or end game accordingly
   function detectCollision(x, y, squareSize) {
     if (
       x >= activeSquare.x &&
@@ -119,56 +108,86 @@ window.onload = () => {
       y >= activeSquare.y &&
       y <= activeSquare.y + squareSize
     ) {
-      isHit = true;
-    }
-    if (isHit === false) {
-      console.log("no hit");
+      if (isDobby) {
+        dobbyLife--;
+        updateLives();
+        if (dobbyLife <= 0) {
+          gameOverDobby();
+          updateHighScore();
+        }
+      } else {
+        scoreCount++;
+        updateScore();
+      }
     }
   }
 
-  function updateScoreOnCollision() {
-    if (isHit) {
-      scoreCount++;
-      updateScore();
-      isHit = false;
+  //PLAY GAME
+  function playGame() {
+    if (timer.remainingSeconds < 40) {
+      clearInterval(intervalID);
+      intervalID = setInterval(playGame, 800);
+    }
+    if (timer.remainingSeconds < 20) {
+      clearInterval(intervalID);
+      intervalID = setInterval(playGame, 730);
+    }
+    isDobby = false;
+    timer.updateTimer();
+    if (Math.random() < 0.8) {
+      getRandomSquare(dolores);
+    } else {
+      isDobby = true;
+      getRandomSquare(dobby);
+    }
+    if (timer.remainingSeconds <= 0) {
+      gameOverDolores();
+      updateHighScore();
     }
   }
 
-  function gameOver() {
+  // GAME OVER
+  function gameOverDolores() {
     clearInterval(intervalID);
     setTimeout(() => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(finalDobby, 0, 0, canvas.width, canvas.height);
       ctx.fillStyle = "#fff";
-      ctx.font = "35px Arial";
+      ctx.font = "65px Magic owl";
       ctx.textAlign = "center";
-      ctx.textBaseline = "top";
       ctx.fillText(
-        "Great job!! Your score: " + scoreCount,
+        "Great job!!   Your score: " + scoreCount,
         canvas.width / 2,
-        15
+        60
       );
     }, 700);
   }
 
-  // function gameOverDobby() {
-  //   clearInterval(intervalID);
-  //   setTimeout(() => {
-  //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //     ctx.drawImage(deadDobby, 0, 0, canvas.width, canvas.height);
-  //     ctx.font = "40px Arial";
-  //     ctx.fillStyle = "#fff";
-  //     ctx.textAlign = "center";
-  //     ctx.textBaseline = "top";
-  //     ctx.fillText("Oh no! Your score: " + scoreCount, canvas.width / 2, 15);
-  //   }, 700);
-  // }
+  function gameOverDobby() {
+    clearInterval(intervalID);
+    setTimeout(() => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(deadDobby, 0, 0, canvas.width, canvas.height);
+      ctx.font = "70px Magic owl";
+      ctx.fillStyle = "#af1c37";
+      ctx.textAlign = "center";
+      ctx.fillText(
+        "Oh  no! Your score: ",
+        canvas.width / 2,
+        canvas.height - 80
+      );
+      ctx.fillText(scoreCount, canvas.width / 2, canvas.height - 25);
+    }, 700);
+  }
 
   //RESTART
   document.querySelector(".restart-btn").onclick = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid();
     scoreCount = 0;
+    updateScore();
+    dobbyLife = 3;
+    updateLives();
     timer.resetTimer();
     intervalID = setInterval(playGame, 1000);
   };

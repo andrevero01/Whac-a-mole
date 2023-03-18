@@ -16,7 +16,7 @@ class Timer {
   }
 
   updateTimer() {
-    if (this.remainingSeconds >= 0) {
+    if (this.remainingSeconds > 0) {
       this.remainingSeconds--;
     }
     if (this.remainingSeconds < 10) {
@@ -24,6 +24,7 @@ class Timer {
       this.el.division.classList.add("red-text");
       this.el.seconds.classList.add("red-text");
     }
+    this.drawTimer();
   }
 
   resetTimer() {
