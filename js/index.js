@@ -59,7 +59,7 @@ window.onload = () => {
   updateHighScore();
 
   // Lives update
-  let dobbyLife = 3;
+  let dobbyLife = 2;
   function updateLives() {
     const lives = document.querySelector("#dobby-life");
     lives.textContent = `Lives: ${dobbyLife}`;
@@ -72,7 +72,7 @@ window.onload = () => {
 
   //Start game
   document.querySelector(".start-btn").onclick = () => {
-    intervalID = setInterval(playGame, 1000);
+    intervalID = setInterval(playGame, 900);
   };
 
   // Event to detect the coordinate of the mouse click using detectCollision function
@@ -130,7 +130,7 @@ window.onload = () => {
     }
     if (timer.remainingSeconds < 20) {
       clearInterval(intervalID);
-      intervalID = setInterval(playGame, 730);
+      intervalID = setInterval(playGame, 710);
     }
     isDobby = false;
     timer.updateTimer();
